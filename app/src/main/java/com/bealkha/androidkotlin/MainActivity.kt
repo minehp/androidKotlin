@@ -5,20 +5,25 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
-    // apa itu mutablelist apa bedanya dengan list biasa
     private var items: MutableList<Item> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val list = findViewById<RecyclerView>(R.id.club_list)
+        /*val list = findViewById<RecyclerView>(R.id.club_list)
         initData()
-
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = RecyclerViewAdapter(this, items) {
+            Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
+        }*/
+
+        initData()
+        club_list.layoutManager = LinearLayoutManager(this)
+        club_list.adapter = RecyclerViewAdapter(this, items) {
             Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
         }
     }
