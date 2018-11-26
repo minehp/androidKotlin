@@ -6,22 +6,21 @@ import org.jetbrains.anko.*
 
 class ClubUI : AnkoComponent<ViewGroup> {
     companion object {
-        val testID = 1
-        val test2ID = 2
+        val logoID = 1
+        val clubName = 2
     }
     override fun createView(ui: AnkoContext<ViewGroup>): View = with(ui) {
-        verticalLayout {
+        linearLayout {
             lparams(matchParent, wrapContent)
             padding = dip(16)
 
-            textView {
-                id = testID
-                text = "test"
+            imageView {
+                id = logoID
+                setImageResource(R.drawable.img_barca)
             }
-
             textView {
-                id = test2ID
-                text = "test 2"
+                id = clubName
+                text = "Barcelona"
             }
         }
     }

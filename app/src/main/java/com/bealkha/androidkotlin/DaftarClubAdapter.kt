@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import kotlinx.android.synthetic.main.item_list.view.*
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
 
@@ -17,13 +18,13 @@ class DaftarClubAdapter(private val context: Context, private val items: List<It
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.testView.text = items[position].name
-        holder.test2View.text = items[position].image.toString()
+        holder.clubView.text = items[position].name
+        items[position].image
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val testView = view.find<TextView>(ClubUI.testID)
-        var test2View = view.find<TextView>(ClubUI.test2ID)
+        val logoView = view.find<TextView>(ClubUI.logoID)
+        var clubView = view.find<TextView>(ClubUI.clubName)
 
     }
 }
