@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">androidKotlin</string>
-    <string name="itmListImgDesc">Image view untuk logo club bola</string>
-    <string name="itmListNameText">Barcelona FC</string>
     <string-array name="club_name">
         <item>Real Madrid FC</item>
         <item>Barcelona FC</item>
