@@ -1,5 +1,7 @@
 package com.bealkha.androidkotlin
 
+import android.text.Layout
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.*
@@ -18,9 +20,20 @@ class ClubUI : AnkoComponent<ViewGroup> {
                 id = logoID
                 setImageResource(R.drawable.img_barca)
             }
+            .lparams {
+                width = dip(50)
+                height = dip(50)
+            }
+
             textView {
                 id = clubName
                 text = "Barcelona"
+            }
+            .lparams {
+                margin = dip(10)
+                gravity = Gravity.CENTER_VERTICAL
+                width = wrapContent
+                height = wrapContent
             }
         }
     }
