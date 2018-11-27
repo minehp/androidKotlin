@@ -1,9 +1,7 @@
 package com.bealkha.androidkotlin
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
@@ -22,12 +20,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         val adapter: DaftarClubAdapter = DaftarClubAdapter(this, items) {
-//            startActivity<SecondActivity>("clubName" to it.name,)
-            val intent = Intent(this,SecondActivity::class.java)
-            intent.putExtra("clubName", it.name)
-            intent.putExtra("clubLogo", it.image)
-            intent.putExtra("clubDetail", it.detail)
-            startActivity(intent)
+            startActivity<SecondActivity>(
+                "clubName" to it.name,
+                "clubLogo" to it.image,
+                "clubDetail" to it.detail
+            )
         }
         MainActivityUI(adapter).setContentView(this)
     }
