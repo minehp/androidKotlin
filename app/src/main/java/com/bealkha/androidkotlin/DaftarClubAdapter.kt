@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
 
@@ -22,16 +23,14 @@ class DaftarClubAdapter(private val context: Context, private val items: List<It
         holder.bindItem(items[position], listener)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
         val logoView = view.find<ImageView>(ClubUI.logoID)
         var clubView = view.find<TextView>(ClubUI.clubName)
 
         fun bindItem(value: Item, listener: (Item) -> Unit) {
             clubView.text = value.name
             value.image?.let { Picasso.get().load(it).into(logoView) }
-            itemView.setOnClickListener {
-                listener(value)
-            }
+            itemView.setOnClickListener { listener(value) }
         }
     }
 
