@@ -10,7 +10,6 @@ import org.jetbrains.anko.*
 
 class SecondActivity : AppCompatActivity() {
 
-    private var name: String = ""
     private lateinit var clubNameView: TextView
     private lateinit var clubDetailView: TextView
     private lateinit var clubLogoView: ImageView
@@ -33,13 +32,12 @@ class SecondActivity : AppCompatActivity() {
             clubDetailView = textView().lparams { }
         }
 
-        val intent = intent
-
-        intent.getIntExtra("clubLogo", 1)?.let {
+        val item: Item = intent.extras.getParcelable("data")
+        item.image?.let {
             Picasso.get().load(it).into(clubLogoView)
         }
-        clubNameView.text = intent.getStringExtra("clubName")
-        clubDetailView.text = intent.getStringExtra("clubDetail")
+        clubNameView.text = item.name
+        clubDetailView.text = item.detail
 
 
     }

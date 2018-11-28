@@ -20,11 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val adapter: DaftarClubAdapter = DaftarClubAdapter(this, items) {
-            startActivity<SecondActivity>(
-                "clubName" to it.name,
-                "clubLogo" to it.image,
-                "clubDetail" to it.detail
-            )
+            startActivity<SecondActivity>("data" to it)
         }
         MainActivityUI(adapter).setContentView(this)
     }

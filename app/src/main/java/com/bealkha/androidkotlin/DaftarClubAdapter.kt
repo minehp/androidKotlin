@@ -23,9 +23,11 @@ class DaftarClubAdapter(private val context: Context, private val items: List<It
         holder.bindItem(items[position], listener)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
-        val logoView = view.find<ImageView>(ClubUI.logoID)
-        var clubView = view.find<TextView>(ClubUI.clubName)
+    class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+            LayoutContainer {
+
+        val logoView = containerView.find<ImageView>(ClubUI.logoID)
+        var clubView = containerView.find<TextView>(ClubUI.clubName)
 
         fun bindItem(value: Item, listener: (Item) -> Unit) {
             clubView.text = value.name
