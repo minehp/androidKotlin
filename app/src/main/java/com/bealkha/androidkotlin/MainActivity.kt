@@ -1,21 +1,21 @@
 package com.bealkha.androidkotlin
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
 import com.google.gson.Gson
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
+import com.bealkha.androidkotlin.invisible
+import com.bealkha.androidkotlin.visible
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
     private lateinit var listTeam: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var swipeRefresh: SwipeRefreshLayout
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         linearLayout {
             lparams(width = matchParent, height = wrapContent)
             orientation = LinearLayout.VERTICAL
@@ -54,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
 
         adapter = MainAdapter(teams)
@@ -67,6 +67,33 @@ class MainActivity : AppCompatActivity() {
         val spinnerItems = resources.getStringArray(R.array.league)
         val spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                leagueName = spinner.selectedItem.toString()
+                presenter.getTeamList(leagueName)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+//        swipeRefresh.onRefresh {
+//            presenter.getTeamList(leagueName)
+//        }
+    }
+
+    override fun showLoading() {
+        progressBar.visible()
+    }
+
+    override fun hideLoading() {
+        progressBar.invisible()
+    }
+
+    override fun showTeamList(data: List<Team>) {
+        swipeRefresh.isRefreshing = false
+        teams.clear()
+        teams.addAll(data)
+        adapter.notifyDataSetChanged()
     }
 }
 
@@ -81,12 +108,12 @@ class MainPresenter(
         private val apiRepository: ApiRepository,
         private val gson: Gson) {
 
-    fun geteTeamList(league: String?) {
+    fun getTeamList(league: String?) {
         view.showLoading()
         doAsync {
             val data = gson.fromJson(
-                apiRepository.doRequest(TheSportDBApi.getTeams(league)),
-                TeamResponse::class.java
+                    apiRepository.doRequest(TheSportDBApi.getTeams(league)),
+                    TeamResponse::class.java
             )
 
             uiThread {

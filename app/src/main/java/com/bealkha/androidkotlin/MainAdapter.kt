@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
+import com.bealkha.androidkotlin.R.id.*
 
 class MainAdapter(private val teams: List<Team>) : RecyclerView.Adapter<TeamViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
@@ -24,8 +25,8 @@ class MainAdapter(private val teams: List<Team>) : RecyclerView.Adapter<TeamView
 }
 
 class TeamViewHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
-    private val teamBadge: ImageView = containerView.find(R.id.team_badge)
-    private val teamName: TextView = containerView.find(R.id.team_name)
+    private val teamBadge: ImageView = containerView.find(team_badge)
+    private val teamName: TextView = containerView.find(team_name)
     fun bindItem(teams: Team) {
         Picasso.get().load(teams.teamBadge).into(teamBadge)
         teamName.text = teams.teamName
@@ -41,11 +42,11 @@ class TeamUI: AnkoComponent<ViewGroup> {
                 orientation = LinearLayout.HORIZONTAL
 
                 imageView {
-                    id = R.id.team_badge
+                    id = team_badge
                 }.lparams(width = dip(50), height = dip(50))
 
                 textView {
-                    id = R.id.team_name
+                    id = team_name
                     textSize = 16f
                 }.lparams { margin = dip(15) }
             }
